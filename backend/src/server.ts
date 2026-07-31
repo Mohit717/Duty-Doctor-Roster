@@ -7,7 +7,15 @@ import router from './roster.routes';
 dotenv.config();
 
 const app = express();
-app.use(cors());
+const corsOptions = {
+    origin: process.env.NODE_ENV === 'production'
+        ? 'https://duty-doctor-roster-nu.vercel.app'
+        : 'http://localhost:5173',
+    credentials: true,
+    methods: ['GET', 'POST', 'PATCH', 'DELETE'],
+    allowedHeaders: ['Content-Type']
+};
+app.use(cors(corsOptions));
 const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
